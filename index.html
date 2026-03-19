@@ -218,23 +218,31 @@ function drawBadge(ctx,W,H){
   // ── GOOGLE DEVELOPERS + GDG MAROUA (top right) ──
   ctx.save();
   ctx.textAlign="right";
-  // Google Developers
-  ctx.font="bold 14px Segoe UI, Arial";
-  // "Google" in multicolor
-  const gdText="Google";
-  const gdColors=["#4285F4","#EA4335","#FBBC05","#4285F4","#34A853","#EA4335"];
-  let gx=W-22, gy=ly+26;
+  // ── GOOGLE DEVELOPERS + GDG MAROUA ──
+  ctx.save();
   ctx.font="bold 15px Segoe UI, Arial";
-  let gdW=0; gdText.split("").forEach(c=>{gdW+=ctx.measureText(c).width;});
-  let curX=W-22-gdW-ctx.measureText(" Developers").width;
-  gdText.split("").forEach((c,i)=>{
-    ctx.fillStyle=gdColors[i];ctx.fillText(c,curX+ctx.measureText(gdText.slice(0,i)).width,gy);
+  const gdColors2=["#4285F4","#EA4335","#FBBC05","#4285F4","#34A853","#EA4335"];
+  const gdLetters="Google".split("");
+  const devText=" Developers";
+  // Measure total to right-align
+  let totalGW=0;
+  gdLetters.forEach(c=>{totalGW+=ctx.measureText(c).width;});
+  totalGW+=ctx.measureText(devText).width;
+  let curGX=W-22-totalGW;
+  const gy2=ly+28;
+  // Draw "Google" letter by letter with correct accumulation
+  gdLetters.forEach((c,i)=>{
+    ctx.fillStyle=gdColors2[i];
+    ctx.textAlign="left";
+    ctx.fillText(c,curGX,gy2);
+    curGX+=ctx.measureText(c).width;
   });
-  ctx.fillStyle="#5F6368";ctx.font="bold 15px Segoe UI, Arial";
-  ctx.fillText(" Developers",curX+ctx.measureText(gdText).width,gy);
-  // GDG Maroua
+  ctx.fillStyle="#5F6368";
+  ctx.fillText(devText,curGX,gy2);
+  // GDG Maroua below
+  ctx.textAlign="right";
   ctx.fillStyle="#7A97B2";ctx.font="13px Segoe UI, Arial";
-  ctx.fillText("GDG Maroua",W-22,ly+48);
+  ctx.fillText("GDG Maroua",W-22,ly+50);
   ctx.restore();
 
   // ── JE SERAI LÀ ──
@@ -281,31 +289,39 @@ function drawBadge(ctx,W,H){
   ctx.fillText("Participante · Maroua, Extrême-Nord",W/2,640);
 
   // ── INFO BOX ──
-  const bx=40,by=662,bw=W-80,bh=148;
-  ctx.save();ctx.shadowColor="rgba(25,118,210,0.07)";ctx.shadowBlur=18;
+  const bx=40,by=655,bw=W-80,bh=162;
+  // Box bg
+  ctx.save();
+  ctx.shadowColor="rgba(25,118,210,0.06)";ctx.shadowBlur=20;
   const bbg=ctx.createLinearGradient(bx,by,bx+bw,by+bh);
-  bbg.addColorStop(0,"rgba(25,118,210,0.05)");bbg.addColorStop(1,"rgba(0,191,165,0.05)");
-  ctx.fillStyle=bbg;rrPath(ctx,bx,by,bw,bh,16);ctx.fill();ctx.restore();
-  ctx.strokeStyle="rgba(0,191,165,0.22)";ctx.lineWidth=1.5;rrPath(ctx,bx,by,bw,bh,16);ctx.stroke();
+  bbg.addColorStop(0,"rgba(240,247,255,0.95)");bbg.addColorStop(1,"rgba(235,253,250,0.95)");
+  ctx.fillStyle=bbg;rrPath(ctx,bx,by,bw,bh,18);ctx.fill();ctx.restore();
+  ctx.strokeStyle="rgba(0,191,165,0.2)";ctx.lineWidth=1.5;rrPath(ctx,bx,by,bw,bh,18);ctx.stroke();
+  // Left accent bar
   const acG=ctx.createLinearGradient(bx,by,bx,by+bh);acG.addColorStop(0,"#1976D2");acG.addColorStop(1,"#00BFA5");
   ctx.fillStyle=acG;rrPath(ctx,bx,by,5,bh,3);ctx.fill();
 
-  const ISZ=30, IX=bx+18, IGAP=46;
+  // Row heights
+  const ISZ=34, IX=bx+20;
 
-  // Row 1 — Calendar icon
-  drawCalendarIcon(ctx,IX,by+12,ISZ);
-  ctx.textAlign="left";ctx.fillStyle="#0D1B2A";ctx.font="bold 18px Segoe UI, Arial";
-  ctx.fillText("28 Mars 2026  ·  Grande Finale",IX+ISZ+14,by+33);
+  // ── ROW 1: Calendar ──
+  drawCalendarIcon(ctx, IX, by+10, ISZ);
+  ctx.textAlign="left";
+  ctx.fillStyle="#0D1B2A";
+  ctx.font="bold 19px Arial, sans-serif";
+  ctx.fillText("28 Mars 2026  ·  Grande Finale", IX+ISZ+16, by+32);
 
-  // Row 2 — Pin icon
-  drawPinIcon(ctx,IX,by+54,ISZ);
-  ctx.fillStyle="#3B5068";ctx.font="16px Segoe UI, Arial";
-  ctx.fillText("CEDC, Maroua — Extrême-Nord, Cameroun",IX+ISZ+14,by+75);
+  // ── ROW 2: Pin ──
+  drawPinIcon(ctx, IX+2, by+54, ISZ*0.9);
+  ctx.fillStyle="#3B5068";
+  ctx.font="17px Arial, sans-serif";
+  ctx.fillText("CEDC, Maroua — Extrême-Nord, Cameroun", IX+ISZ+16, by+74);
 
-  // Row 3 — Link icon
-  drawLinkIcon(ctx,IX,by+96,ISZ);
-  ctx.fillStyle="#1976D2";ctx.font="bold 15px Segoe UI, Arial";
-  ctx.fillText("wtm-maroua-challenge.vercel.app",IX+ISZ+14,by+117);
+  // ── ROW 3: Link ──
+  drawLinkIcon(ctx, IX, by+100, ISZ);
+  ctx.fillStyle="#1976D2";
+  ctx.font="bold 16px Arial, sans-serif";
+  ctx.fillText("wtm-maroua-challenge.vercel.app", IX+ISZ+16, by+122);
 
   // ── BREAK THE PATTERN ──
   ctx.textAlign="center";
