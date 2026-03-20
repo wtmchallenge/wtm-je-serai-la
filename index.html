@@ -266,7 +266,7 @@ function drawBadge(ctx,W,H){
   // Card 1 — Date (fond bleu léger)
   ctx.save();ctx.shadowColor="rgba(25,118,210,0.12)";ctx.shadowBlur=20;
   const c1g=ctx.createLinearGradient(card1x,cardy,card1x+cardw,cardy+cardh);
-  c1g.addColorStop(0,"rgba(227,242,253,0.97)");c1g.addColorStop(1,"rgba(225,245,254,0.97)");
+  c1g.addColorStop(0,"rgba(227,242,253,0.20)");c1g.addColorStop(1,"rgba(225,245,254,0.20)");
   ctx.fillStyle=c1g;rrPath(ctx,card1x,cardy,cardw,cardh,22);ctx.fill();ctx.restore();
   ctx.strokeStyle="rgba(25,118,210,0.25)";ctx.lineWidth=2;
   rrPath(ctx,card1x,cardy,cardw,cardh,22);ctx.stroke();
@@ -284,7 +284,7 @@ function drawBadge(ctx,W,H){
   // Card 2 — Lieu (fond teal léger)
   ctx.save();ctx.shadowColor="rgba(0,191,165,0.12)";ctx.shadowBlur=20;
   const c2g=ctx.createLinearGradient(card2x,cardy,card2x+cardw,cardy+cardh);
-  c2g.addColorStop(0,"rgba(224,247,245,0.97)");c2g.addColorStop(1,"rgba(232,245,233,0.97)");
+  c2g.addColorStop(0,"rgba(224,247,245,0.20)");c2g.addColorStop(1,"rgba(232,245,233,0.20)");
   ctx.fillStyle=c2g;rrPath(ctx,card2x,cardy,cardw,cardh,22);ctx.fill();ctx.restore();
   ctx.strokeStyle="rgba(0,191,165,0.28)";ctx.lineWidth=2;
   rrPath(ctx,card2x,cardy,cardw,cardh,22);ctx.stroke();
