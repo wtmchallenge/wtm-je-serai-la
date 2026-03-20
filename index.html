@@ -45,7 +45,7 @@ canvas{display:block;max-width:100%;}
 <div class="page-header">
   <div class="brand">Women Techmakers Maroua · 2026</div>
   <h1>Je serai là — <em>Break the Pattern</em></h1>
-  <p>Génère ton badge personnalisé · Format carré Facebook & Instagram</p>
+  <p>Génère ton badge personnalisé </p>
 </div>
 <div class="layout">
   <div class="form-panel">
@@ -194,14 +194,14 @@ function drawBadge(ctx,W,H){
     ctx.save();ctx.beginPath();ctx.arc(lx+lsz/2,ly+lsz/2,lsz/2,0,Math.PI*2);ctx.clip();
     ctx.drawImage(logoImg,lx,ly,lsz,lsz);ctx.restore();
   }
-  ctx.fillStyle="#0D1B2A";ctx.font="bold 22px Segoe UI, Arial";ctx.textAlign="left";
-  ctx.fillText("Women Techmakers",lx+lsz+16,ly+36);
-  ctx.fillStyle="#00BFA5";ctx.font="bold 22px Segoe UI, Arial";
-  ctx.fillText("Maroua",lx+lsz+16,ly+64);
+  ctx.fillStyle="#0D1B2A";ctx.font="bold 32px Segoe UI, Arial";ctx.textAlign="left";
+  ctx.fillText("Women Techmakers",lx+lsz+16,ly+40);
+  ctx.fillStyle="#00BFA5";ctx.font="bold 32px Segoe UI, Arial";
+  ctx.fillText("Maroua",lx+lsz+16,ly+76);
 
   // ── GOOGLE DEVELOPERS + GDG (top right) ──
   ctx.save();
-  ctx.font="bold 19px Segoe UI, Arial";
+  ctx.font="bold 28px Segoe UI, Arial";
   const gdColors=["#4285F4","#EA4335","#FBBC05","#4285F4","#34A853","#EA4335"];
   const gdLetters="Google".split("");
   const devText=" Developers";
@@ -212,8 +212,8 @@ function drawBadge(ctx,W,H){
   const gy=ly+36;
   gdLetters.forEach((c,i)=>{ctx.fillStyle=gdColors[i];ctx.textAlign="left";ctx.fillText(c,curGX,gy);curGX+=ctx.measureText(c).width;});
   ctx.fillStyle="#5F6368";ctx.fillText(devText,curGX,gy);
-  ctx.textAlign="right";ctx.fillStyle="#7A97B2";ctx.font="16px Segoe UI, Arial";
-  ctx.fillText("GDG Maroua",W-28,ly+64);
+  ctx.textAlign="right";ctx.fillStyle="#7A97B2";ctx.font="25px Segoe UI, Arial";
+  ctx.fillText("GDG Maroua",W-28,ly+76);
   ctx.restore();
 
   // ── JE SERAI LÀ ──
@@ -259,31 +259,45 @@ function drawBadge(ctx,W,H){
   ctx.fillStyle="#7A97B2";ctx.font="22px Segoe UI, Arial";
   ctx.fillText("Participant(e)  ·  Maroua, Extrême-Nord",W/2,786);
 
-  // ── INFO BOX (date + lieu only, no link) ──
-  const bx=70,by=820,bw=W-140,bh=148;
-  ctx.save();ctx.shadowColor="rgba(25,118,210,0.07)";ctx.shadowBlur=22;
-  const bbg=ctx.createLinearGradient(bx,by,bx+bw,by+bh);
-  bbg.addColorStop(0,"rgba(240,247,255,0.96)");bbg.addColorStop(1,"rgba(235,253,250,0.96)");
-  ctx.fillStyle=bbg;rrPath(ctx,bx,by,bw,bh,20);ctx.fill();ctx.restore();
-  ctx.strokeStyle="rgba(0,191,165,0.22)";ctx.lineWidth=1.5;rrPath(ctx,bx,by,bw,bh,20);ctx.stroke();
-  // accent bar
-  const acG=ctx.createLinearGradient(bx,by,bx,by+bh);acG.addColorStop(0,"#1976D2");acG.addColorStop(1,"#00BFA5");
-  ctx.fillStyle=acG;rrPath(ctx,bx,by,6,bh,3);ctx.fill();
+  // ── INFO CARDS ──
+  const ISZ=42;
+  const card1x=70, card2x=W/2+10, cardy=820, cardw=W/2-80, cardh=148;
 
-  const ISZ=42, IX=bx+24;
+  // Card 1 — Date (fond bleu léger)
+  ctx.save();ctx.shadowColor="rgba(25,118,210,0.12)";ctx.shadowBlur=20;
+  const c1g=ctx.createLinearGradient(card1x,cardy,card1x+cardw,cardy+cardh);
+  c1g.addColorStop(0,"rgba(227,242,253,0.97)");c1g.addColorStop(1,"rgba(225,245,254,0.97)");
+  ctx.fillStyle=c1g;rrPath(ctx,card1x,cardy,cardw,cardh,22);ctx.fill();ctx.restore();
+  ctx.strokeStyle="rgba(25,118,210,0.25)";ctx.lineWidth=2;
+  rrPath(ctx,card1x,cardy,cardw,cardh,22);ctx.stroke();
+  // barre top card1
+  const c1bar=ctx.createLinearGradient(card1x,cardy,card1x+cardw,cardy);
+  c1bar.addColorStop(0,"#1976D2");c1bar.addColorStop(1,"#42A5F5");
+  ctx.fillStyle=c1bar;rrPath(ctx,card1x,cardy,cardw,8,4);ctx.fill();
+  // icone + texte card1
+  drawCalendarIcon(ctx,card1x+18,cardy+22,ISZ);
+  ctx.textAlign="left";ctx.fillStyle="#0D1B2A";ctx.font="bold 26px Arial, sans-serif";
+  ctx.fillText("28 Mars 2026",card1x+ISZ+28,cardy+56);
+  ctx.fillStyle="#1976D2";ctx.font="bold 22px Arial, sans-serif";
+  ctx.fillText("WTM Day Maroua",card1x+ISZ+28,cardy+88);
 
-  // Row 1 — Calendar
-  drawCalendarIcon(ctx,IX,by+18,ISZ);
-  ctx.textAlign="left";ctx.fillStyle="#0D1B2A";ctx.font="bold 30px Arial, sans-serif";
-  ctx.fillText("28 Mars 2026  ·  ",IX+ISZ+18,by+52);
-  const dateWidth=ctx.measureText("28 Mars 2026  ·  ").width;
-  ctx.fillStyle="#1976D2";ctx.font="bold 28px Arial, sans-serif";
-  ctx.fillText("WTM Day Maroua",IX+ISZ+18+dateWidth,by+52);
-
-  // Row 2 — Pin
-  drawPinIcon(ctx,IX+2,by+78,ISZ*0.9);
-  ctx.fillStyle="#3B5068";ctx.font="bold 26px Arial, sans-serif";
-  ctx.fillText("CEDC, Maroua  —  Extrême-Nord, Cameroun",IX+ISZ+18,by+112);
+  // Card 2 — Lieu (fond teal léger)
+  ctx.save();ctx.shadowColor="rgba(0,191,165,0.12)";ctx.shadowBlur=20;
+  const c2g=ctx.createLinearGradient(card2x,cardy,card2x+cardw,cardy+cardh);
+  c2g.addColorStop(0,"rgba(224,247,245,0.97)");c2g.addColorStop(1,"rgba(232,245,233,0.97)");
+  ctx.fillStyle=c2g;rrPath(ctx,card2x,cardy,cardw,cardh,22);ctx.fill();ctx.restore();
+  ctx.strokeStyle="rgba(0,191,165,0.28)";ctx.lineWidth=2;
+  rrPath(ctx,card2x,cardy,cardw,cardh,22);ctx.stroke();
+  // barre top card2
+  const c2bar=ctx.createLinearGradient(card2x,cardy,card2x+cardw,cardy);
+  c2bar.addColorStop(0,"#00BFA5");c2bar.addColorStop(1,"#26C6DA");
+  ctx.fillStyle=c2bar;rrPath(ctx,card2x,cardy,cardw,8,4);ctx.fill();
+  // icone + texte card2
+  drawPinIcon(ctx,card2x+18,cardy+24,ISZ*0.9);
+  ctx.textAlign="left";ctx.fillStyle="#0D1B2A";ctx.font="bold 26px Arial, sans-serif";
+  ctx.fillText("CEDC, Maroua",card2x+ISZ+28,cardy+56);
+  ctx.fillStyle="#00897B";ctx.font="bold 22px Arial, sans-serif";
+  ctx.fillText("Extrême-Nord, Cameroun",card2x+ISZ+28,cardy+88);
 
   // ── BREAK THE PATTERN ──
   ctx.textAlign="center";
